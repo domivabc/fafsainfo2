@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Fafsainfo2</title>
+    <link rel="icon" href="/docs/4.0/assets/img/favicons/favicon.ico">
+
+    <title>Fafsainfo2</title> 
+
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
@@ -10,86 +13,75 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+
   </head>
 
   <body>
+  <!-- Top Header -->
+  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+      <h5 class="my-0 mr-md-auto font-weight-normal"><a href="/">FAFSA INFO</a></h5>
+      <nav class="my-2 my-md-0 mr-md-3">
+        <a><%= link_to 'About', home_about_path, class: 'p-2 text-dark' %></a>         
+      </nav>
+      <% if user_signed_in? %>  
 
-  <!-- Nav Bar -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <%= link_to 'Events', events_path, class: 'p-2 text-dark' %>                
+        Logged in as &nbsp;<strong><%= current_user.email %></strong>&nbsp;
+        <%= link_to 'Edit profile', edit_user_registration_path, :class => 'btn btn-outline-primary' %>
+        &nbsp;
+        <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'btn btn-outline-primary'  %>
 
-    <div class="container">
-      <a class="navbar-brand" href="/">Fafsa Info</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-      <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <%= link_to 'About', home_about_path, class: 'nav-link' %>
-          </li>
-          <% if user_signed_in? %>
-          <li class="nav-item active">
-            <%= link_to 'Events', events_path, class: 'nav-link' %>
-          </li>
-          <% end %>
-       </ul>
-       <ul class="navbar-nav navbar-right">
-
-       <% if user_signed_in? %>
-       <li class="nav-item active">
-       <p class="nav-link">Logged in as <strong><%= current_user.email %></strong></p>
-       </li>
+      <% else %>
        
-       <li class="nav-item active">
-        <%= link_to 'Edit profile | ', edit_user_registration_path, :class => 'nav-link' %> 
-       </li>
-       <li class="nav-item active">
-       <%= link_to "Logout", destroy_user_session_path, method: :delete, :class => 'nav-link'  %>
-       </li>
-       <li class="nav-item active">
-       <%= image_tag current_user.gravatar_url, :class => "gravatar" %>
-       </li>
-       <% else %>
-       <li class="nav-item active">
-       <%= link_to "Sign up | ", new_user_registration_path, :class => 'nav-link'  %> 
-       </li>
-       <li class="nav-item active">
-       <%= link_to "Login", new_user_session_path, :class => 'nav-link'  %>
-       </li>
-       <% end %>
-       
-      </ul>      
-
-      </div>
+        <%= link_to "Sign up", new_user_registration_path, :class => 'btn btn-outline-primary'  %> 
+        &nbsp;
+        <a><%= link_to 'Sign in', new_user_session_path, class: 'btn btn-outline-primary' %></a> 
+      <% end %>      
+      
     </div>
 
-  </nav>
-
-
-  <!-- Main -->
-  <div class="container">
-
+    <!-- Errors and Alerts -->
     <% if notice %>
       <p class="alert alert-success"><%= notice %></p>
     <% end %>
+  
     <% if alert %>
       <p class="alert alert-danger"><%= alert %></p>
-    <% end %>
+    <% end %>  
 
-    <%= yield %>
+
+  <!-- Main -->    
+
+  <%= yield %>
+
+  <!-- Footer -->
+    <footer class="pt-4 my-md-5 pt-md-5 border-top">
+    <div class="container center">
+
+<div class="row justify-content-center">
+          <div class="row">
+                        
+            <div class="col-6 col-md">
+              <h5>Resources</h5>
+              <ul class="list-unstyled text-small">
+                <li><%= link_to 'Team', home_about_path, class: 'p-2 text-dark' %></li>              
+              </ul>
+            </div>
+            <div class="col-6 col-md">
+              <h5>About</h5>
+              <ul class="list-unstyled text-small">
+                <li><%= link_to 'Team', home_about_path, class: 'p-2 text-dark' %></li>              
+              </ul>
+            </div>
+          </div>
+
+          </div>
+          </div>
+  </footer>
+
   </div>
 
-
-  <!-- footer -->
-  <footer class="bg-primary text-center text-lg-start">
-  <!-- Copyright -->
-  <div class="text-white text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-    © 2021 Copyright: Vagner Software Boutique
-    
-  </div>
-  <!-- Copyright -->
-</footer>
-
+  <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
